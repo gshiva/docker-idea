@@ -1,6 +1,8 @@
 FROM ubuntu:14.04
 # MAINTAINER Fabio Rehm "fgrehm@gmail.com" modified by Reto Gmür
 
+RUN apt-get update && apt-get install -y firefox tilda
+
 RUN sed 's/main$/main universe/' -i /etc/apt/sources.list && \
     apt-get update && apt-get install -y software-properties-common && \
     add-apt-repository ppa:webupd8team/java -y && \
@@ -11,6 +13,7 @@ RUN sed 's/main$/main universe/' -i /etc/apt/sources.list && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/*
 
+
 ADD state.xml /tmp/state.xml
 
 RUN wget http://dlc-cdn.sun.com/netbeans/8.0.2/final/bundles/netbeans-8.0.2-javaee-linux.sh -O /tmp/netbeans.sh -q && \
@@ -18,6 +21,7 @@ RUN wget http://dlc-cdn.sun.com/netbeans/8.0.2/final/bundles/netbeans-8.0.2-java
     echo 'Installing netbeans' && \
     /tmp/netbeans.sh --silent --state /tmp/state.xml && \
     rm -rf /tmp/*
+
 
 ADD run /usr/local/bin/netbeans
 
@@ -29,7 +33,16 @@ RUN chmod +x /usr/local/bin/netbeans && \
     chmod 0440 /etc/sudoers.d/developer && \
     chown developer:developer -R /home/developer
 
+ADD tilda-config /home/developer/.config/tilda/config_0
+
+RUN echo "Adding start script"
+
+ADD start.sh /usr/local/bin/start.sh
+
+RUN chmod +x /usr/local/bin/start.sh
+
 USER developer
+
 ENV HOME /home/developer
 WORKDIR /home/developer
-CMD /usr/local/bin/netbeans
+CMD /usr/local/bin/start.sh
