@@ -39,6 +39,9 @@ fi
 sudo chown developer:developer /home/developer/.netbeans
 
 if [ ! -f /home/developer/.config/tilda/config_0 ]; then
+  if [ ! -d /home/developer/.config/tilda/ ]; then
+    mkdir -p /home/developer/.config/tilda/
+  fi
   echo "copying tilda config"
   cp /home/template/.config/tilda/config_0 /home/developer/.config/tilda/config_0
 else
