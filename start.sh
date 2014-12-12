@@ -52,7 +52,9 @@ echo "starting"
 /usr/bin/firefox -no-remote &
 /usr/bin/tilda -c /bin/bash &
 TILDA_PID=$!
-
+if [ /home/developer/config/autoexec.sh ]; then 
+  /home/developer/config/autoexec.sh
+fi
 for job in `jobs -p | grep -v $TILDA_PID`
 do
 echo $job
