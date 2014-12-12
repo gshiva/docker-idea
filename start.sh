@@ -5,10 +5,11 @@ FAIL=0
 echo "starting"
 
 /usr/local/bin/netbeans &
-/usr/bin/firefox &
+/usr/bin/firefox -no-remote &
 /usr/bin/tilda &
+TILDA_PID=$!
 
-for job in `jobs -p | grep -v tilda`
+for job in `jobs -p | grep -v $TILDA_PID`
 do
 echo $job
     wait $job || let "FAIL+=1"
