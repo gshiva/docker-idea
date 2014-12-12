@@ -37,14 +37,12 @@ ADD tilda-config /home/template/.config/tilda/config_0
 
 RUN echo "Adding start script"
 
-ADD start.sh /usr/local/bin/start.sh
+ADD start.sh /usr/local/bin/start2.sh
 
-RUN chmod +x /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start2.sh
 
 USER developer
 
-RUN
-
 ENV HOME /home/developer
 WORKDIR /home/developer
-CMD /usr/local/bin/start.sh
+CMD /usr/local/bin/start2.sh

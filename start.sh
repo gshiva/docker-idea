@@ -2,10 +2,6 @@
 
 FAIL=0
 
-if [ ! -f /home/developer/.config/tilda/config_0 ]; then
-  cp /home/template/.config/tilda/config_0 /home/developer/.config/tilda/config_0
-fi
-
 if [ ! -d /home/developer/config ]; then
   mkdir /home/developer/config
 fi
@@ -22,6 +18,8 @@ if [ ! -d /home/developer/config/.config ]; then
   mkdir /home/developer/config/.config
 fi
 
+sudo chown developer:developer /home/developer/config
+
 if [ ! -d /home/developer/.mozilla ]; then
   ln -s /home/developer/config/.mozilla /home/developer/.mozilla
 fi
@@ -33,6 +31,20 @@ fi
 if [ ! -d /home/developer/.config ]; then
   ln -s /home/developer/config/.config /home/developer/.config
 fi
+
+if [ -d /home/developer/NetBeansProjects ]; then
+  sudo chown developer:developer /home/developer/NetBeansProjects
+fi
+
+sudo chown developer:developer /home/developer/.netbeans
+
+if [ ! -f /home/developer/.config/tilda/config_0 ]; then
+  echo "copying tilda config"
+  cp /home/template/.config/tilda/config_0 /home/developer/.config/tilda/config_0
+else
+  echo "tilda: preserving existing config."
+fi
+
 
 echo "starting"
 
