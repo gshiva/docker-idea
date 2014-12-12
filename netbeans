@@ -3,5 +3,6 @@
 docker run -ti --rm \
            -e DISPLAY=$DISPLAY \
            -v /tmp/.X11-unix:/tmp/.X11-unix \
-           -v `pwd`:/workspace \
+           -v `pwd`:/config /home/developer/config \
+           -v `pwd`:/workspace /home/developer/NetBeansProjects \
            fgrehm/netbeans:v8.0.1

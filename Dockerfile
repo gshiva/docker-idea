@@ -33,7 +33,7 @@ RUN chmod +x /usr/local/bin/netbeans && \
     chmod 0440 /etc/sudoers.d/developer && \
     chown developer:developer -R /home/developer
 
-ADD tilda-config /home/developer/.config/tilda/config_0
+ADD tilda-config /home/template/.config/tilda/config_0
 
 RUN echo "Adding start script"
 
@@ -42,6 +42,8 @@ ADD start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
 USER developer
+
+RUN
 
 ENV HOME /home/developer
 WORKDIR /home/developer
