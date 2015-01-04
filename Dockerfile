@@ -1,7 +1,7 @@
 FROM ubuntu:14.04
 # MAINTAINER Fabio Rehm "fgrehm@gmail.com" modified by Reto Gmür
 
-RUN apt-get update && apt-get install -y firefox tilda subversion git retext
+RUN apt-get update && apt-get install -y firefox tilda subversion git retext hg
 
 RUN sed 's/main$/main universe/' -i /etc/apt/sources.list && \
     apt-get update && apt-get install -y software-properties-common && \
