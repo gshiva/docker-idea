@@ -36,6 +36,10 @@ if [ -d /home/developer/NetBeansProjects ]; then
   sudo chown developer:developer /home/developer/NetBeansProjects
 fi
 
+if [ -d /home/developer/.m2 ]; then
+  sudo chown developer:developer /home/developer/.m2
+fi
+
 sudo chown developer:developer /home/developer/.netbeans
 
 if [ ! -f /home/developer/.config/tilda/config_0 ]; then
