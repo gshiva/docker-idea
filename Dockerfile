@@ -7,32 +7,25 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en  
 ENV LC_ALL en_US.UTF-8  
 
-RUN apt-get update && apt-get install -y firefox tilda subversion git retext mercurial tcpflow
+RUN apt-get update && apt-get install -y firefox tilda git retext mercurial tcpflow
 
 
 RUN sed 's/main$/main universe/' -i /etc/apt/sources.list && \
     apt-get update && apt-get install -y software-properties-common && \
     add-apt-repository ppa:webupd8team/java -y && \
     apt-get update && \
-    echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
-    apt-get install -y oracle-java8-installer libxext-dev libxrender-dev libxtst-dev && \
+    echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
+    apt-get install -y oracle-java7-installer libxext-dev libxrender-dev libxtst-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/*
 
+RUN wget -O /tmp/intellij.tar.gz http://download-cf.jetbrains.com/idea/ideaIC-14.0.3.tar.gz && \
+tar xfz /tmp/intellij.tar.gz && \
+cd idea-IC-139.1117.1/bin/ && \
+sudo ln -s `pwd`/idea.sh /usr/local/bin/idea
 
-ADD state.xml /tmp/state.xml
-
-RUN wget http://dlc-cdn.sun.com/netbeans/8.0.2/final/bundles/netbeans-8.0.2-javaee-linux.sh -O /tmp/netbeans.sh -q && \
-    chmod +x /tmp/netbeans.sh && \
-    echo 'Installing netbeans' && \
-    /tmp/netbeans.sh --silent --state /tmp/state.xml && \
-    rm -rf /tmp/*
-
-
-ADD run /usr/local/bin/netbeans
-
-RUN chmod +x /usr/local/bin/netbeans && \
+RUN chmod +x /usr/local/bin/idea && \
     mkdir -p /home/developer && \
     echo "developer:x:1000:1000:Developer,,,:/home/developer:/bin/bash" >> /etc/passwd && \
     echo "developer:x:1000:" >> /etc/group && \

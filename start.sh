@@ -10,8 +10,8 @@ if [ ! -d /home/developer/config/.mozilla ]; then
   mkdir /home/developer/config/.mozilla
 fi
 
-if [ ! -d /home/developer/config/.netbeans ]; then
-  mkdir /home/developer/config/.netbeans
+if [ ! -d /home/developer/config/.idea ]; then
+  mkdir /home/developer/config/.idea
 fi
 
 if [ ! -d /home/developer/config/.config ]; then
@@ -24,23 +24,23 @@ if [ ! -d /home/developer/.mozilla ]; then
   ln -s /home/developer/config/.mozilla /home/developer/.mozilla
 fi
 
-if [ ! -d /home/developer/.netbeans ]; then
-  ln -s /home/developer/config/.netbeans /home/developer/.netbeans
+if [ ! -d /home/developer/.idea ]; then
+  ln -s /home/developer/config/.idea /home/developer/.idea
 fi
 
 if [ ! -d /home/developer/.config ]; then
   ln -s /home/developer/config/.config /home/developer/.config
 fi
 
-if [ -d /home/developer/NetBeansProjects ]; then
-  sudo chown developer:developer /home/developer/NetBeansProjects
+if [ -d /home/developer/IdeaProjects ]; then
+  sudo chown developer:developer /home/developer/IdeaProjects
 fi
 
 if [ -d /home/developer/.m2 ]; then
   sudo chown developer:developer /home/developer/.m2
 fi
 
-sudo chown developer:developer /home/developer/.netbeans
+sudo chown developer:developer /home/developer/.idea
 
 if [ ! -f /home/developer/.config/tilda/config_0 ]; then
   if [ ! -d /home/developer/.config/tilda/ ]; then
@@ -55,7 +55,7 @@ fi
 
 echo "starting"
 
-/usr/local/bin/netbeans &
+/usr/local/bin/idea &
 /usr/bin/firefox -no-remote &
 /usr/bin/tilda -c /bin/bash &
 TILDA_PID=$!

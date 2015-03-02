@@ -1,1 +1,1 @@
-docker build -t reto/netbeans git://github.com/retog/docker-netbeans.git
+docker build -t gshiva/idea git://github.com/gshiva/docker-idea.git
