@@ -40,6 +40,10 @@ if [ -d /home/developer/.m2 ]; then
   sudo chown developer:developer /home/developer/.m2
 fi
 
+if [ -d /home/developer/.ivy2 ]; then
+  sudo chown developer:developer /home/developer/.ivy2
+fi
+
 sudo chown developer:developer /home/developer/.netbeans
 
 if [ ! -f /home/developer/.config/tilda/config_0 ]; then
@@ -55,7 +59,7 @@ fi
 
 echo "starting"
 
-/usr/local/bin/netbeans &
+/usr/local/bin/netbeans -J-Xmx3g&
 /usr/bin/firefox -no-remote &
 /usr/bin/tilda -c /bin/bash &
 TILDA_PID=$!
