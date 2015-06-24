@@ -8,8 +8,8 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8  
 RUN echo "deb http://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
 
-
-RUN apt-get update && apt-get install -y firefox tilda subversion git retext mercurial tcpflow unzip sbt librxtx-java
+#force-yes needed because of missing certificate for sbt
+RUN apt-get update && apt-get install -y --force-yes firefox tilda subversion git retext mercurial tcpflow unzip sbt librxtx-java
 
 
 RUN sed 's/main$/main universe/' -i /etc/apt/sources.list && \
@@ -37,7 +37,7 @@ RUN wget http://dlc-cdn.sun.com/netbeans/8.0.2/final/bundles/netbeans-8.0.2-java
 
 ADD run /usr/local/bin/netbeans
 
-RUN chmod +x /usr/local/bin/netbeans && \
+RUN chmod +rx /usr/local/bin/netbeans && \
     mkdir -p /home/developer && \
     echo "developer:x:1000:1000:Developer,,,:/home/developer:/bin/bash" >> /etc/passwd && \
     echo "developer:x:1000:" >> /etc/group && \
@@ -51,7 +51,7 @@ RUN echo "Adding start script"
 
 ADD start.sh /usr/local/bin/start.sh
 
-RUN chmod +x /usr/local/bin/start.sh
+RUN chmod +rx /usr/local/bin/start.sh
 
 USER developer
 
