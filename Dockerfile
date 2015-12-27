@@ -1,5 +1,6 @@
-FROM ubuntu:14.04
-# MAINTAINER Fabio Rehm "fgrehm@gmail.com" modified by Reto Gmür
+FROM reto/x11-xpra
+MAINTAINER Reto Gmür "me@farewellutopia.com"
+# based on docker-netbeans by Fabio Rehm "fgrehm@gmail.com"
 
 # Set the locale
 RUN locale-gen en_US.UTF-8  
@@ -20,15 +21,16 @@ RUN sed 's/main$/main universe/' -i /etc/apt/sources.list && \
     apt-get install -y oracle-java8-installer libxext-dev libxrender-dev libxtst-dev nodejs npm chromium-browser && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
-    rm -rf /tmp/* && \
     ln -s /usr/bin/nodejs /usr/bin/node
+
+#     rm -rf /tmp/* && \
 
 RUN npm install -g browserify
 RUN echo chromium-browser --no-sandbox > /usr/local/bin/chromium
 
 ADD state.xml /tmp/state.xml
 
-RUN wget http://dlc-cdn.sun.com/netbeans/8.0.2/final/bundles/netbeans-8.0.2-javaee-linux.sh -O /tmp/netbeans.sh -q && \
+RUN wget http://download.netbeans.org/netbeans/8.1/final/bundles/netbeans-8.1-javaee-linux.sh -O /tmp/netbeans.sh -q && \
     chmod +x /tmp/netbeans.sh && \
     echo 'Installing netbeans' && \
     /tmp/netbeans.sh --silent --state /tmp/state.xml && \
@@ -38,12 +40,8 @@ RUN wget http://dlc-cdn.sun.com/netbeans/8.0.2/final/bundles/netbeans-8.0.2-java
 ADD run /usr/local/bin/netbeans
 
 RUN chmod +rx /usr/local/bin/netbeans && \
-    mkdir -p /home/developer && \
-    echo "developer:x:1000:1000:Developer,,,:/home/developer:/bin/bash" >> /etc/passwd && \
-    echo "developer:x:1000:" >> /etc/group && \
-    echo "developer ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/developer && \
-    chmod 0440 /etc/sudoers.d/developer && \
-    chown developer:developer -R /home/developer
+    echo "user ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/user && \
+    chmod 0440 /etc/sudoers.d/user 
 
 ADD tilda-config /home/template/.config/tilda/config_0
 
@@ -52,9 +50,3 @@ RUN echo "Adding start script"
 ADD start.sh /usr/local/bin/start.sh
 
 RUN chmod +rx /usr/local/bin/start.sh
-
-USER developer
-
-ENV HOME /home/developer
-WORKDIR /home/developer
-CMD /usr/local/bin/start.sh
