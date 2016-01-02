@@ -1,51 +1,37 @@
-# docker-netbeans
+# docker-dev
 
-NetBeans v8.0.1 in a Docker container
+NetBeans v8.1.0 and other development tools in a Docker container accessible via [Xpra](http://xpra.org/).
 
-## Requirements
+## Usage
 
-* Docker 1.2+ (should work fine on 1.0+ but I haven't tried)
-* An X11 socket
+The image bases on [reto/x11-xpra](https://github.com/retog/docker-x11-xpra) so consults its documentation or more usage options.
 
-## Quickstart
 
-Assuming `$HOME/bin` is on your `PATH` and that you are able to run `docker`
-commands [without `sudo`](http://docs.docker.io/installation/ubuntulinux/#giving-non-root-access),
-you can use the [provided `netbeans` script](netbeans) to start a disposable
-NetBeans Docker container with your project sources mounted at `/home/developer/workspace`
-within the container:
+## Usage example
 
-```sh
-# The image size is currently 1.131 GB, so go grab a coffee while Docker downloads it
-docker pull fgrehm/netbeans:v8.0.1
-L=$HOME/bin/netbeans && curl -sL https://github.com/fgrehm/docker-netbeans/raw/master/netbeans > $L && chmod +x $L
-cd /path/to/java/project
-netbeans
-```
+Start a data-only-container for the data
 
-Once you close NetBeans the container will be removed and no traces of it will be
-kept on your machine (apart from the Docker image of course).
+    docker run -v /home/user --name dev-data  busybox /bin/false
 
-## Making plugins persist between sessions
+Run with
 
-NetBeans plugins are kept on `$HOME/.netbeans` inside the container, so if you
-want to keep them around after you close it, you'll need to share it with your
-host.
+    docker run -p 2222:22 -d --volumes-from dev-data --name dev reto/dev
 
-For example:
+Copy your ssh public key to the container so that you can login via ssh
+    
+    docker exec -i dev /bin/bash -c 'cat >> /home/user/.ssh/authorized_keys' < ~/.ssh/id_rsa.pub
 
-```sh
-docker run -ti --rm \
-           -e DISPLAY=$DISPLAY \
-           -v /tmp/.X11-unix:/tmp/.X11-unix \
-           -v `pwd`/.netbeans-docker:/home/developer/.netbeans \
-           -v `pwd`:/workspace \
-           fgrehm/netbeans:v8.0.1
-```
+And attach to it with
+  
+    xpra --ssh="ssh -o \"StrictHostKeyChecking no\" -p 2222" attach ssh:user@localhost:100
+   
+Start netbeans with  
 
-## Help! I started the container but I don't see the NetBeans screen
+    ssh -p 2222 user@localhost netbeans
+    
+The same way you start firefox or open a shell (xterm, tilda).
 
-You might have an issue with the X11 socket permissions since the default user
-used by the base image has an user and group ids set to `1000`, in that case
-you can run either create your own base image with the appropriate ids or run
-`xhost +` on your machine and try again.
+Backup the user data from the data-only-container:
+
+    docker run --volumes-from dev-data -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /home/user
+
