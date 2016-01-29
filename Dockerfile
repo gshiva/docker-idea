@@ -10,7 +10,7 @@ ENV LC_ALL en_US.UTF-8
 RUN echo "deb http://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
 
 #force-yes needed because of missing certificate for sbt
-RUN apt-get update && apt-get install -y --force-yes firefox tilda subversion git retext mercurial tcpflow unzip sbt librxtx-java
+RUN apt-get update && apt-get install -y --force-yes firefox tilda xfce4-terminal subversion git retext mercurial tcpflow unzip sbt librxtx-java
 
 
 RUN sed 's/main$/main universe/' -i /etc/apt/sources.list && \
