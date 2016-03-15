@@ -23,7 +23,7 @@ Copy your ssh public key to the container so that you can login via ssh
 
 And attach to it with
   
-    xpra --ssh="ssh -o \"StrictHostKeyChecking no\" -p 2222" attach ssh:user@localhost:100
+    xpra --opengl=yes --ssh="ssh -o \"StrictHostKeyChecking no\" -p 2222" attach ssh:user@localhost:100
    
 Start netbeans with  
 
