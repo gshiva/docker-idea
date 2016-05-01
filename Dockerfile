@@ -19,10 +19,14 @@ RUN sed 's/main$/main universe/' -i /etc/apt/sources.list && \
     add-apt-repository ppa:webupd8team/java -y && \
     apt-get update && \
     echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
-    apt-get install -y oracle-java8-installer libxext-dev libxrender-dev libxtst-dev nodejs npm chromium-browser && \
+    apt-get install -y oracle-java8-installer libxext-dev libxrender-dev libxtst-dev npm chromium-browser && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
-    ln -s /usr/bin/nodejs /usr/bin/node
+    
+RUN npm cache clean -f && \
+    npm install -g n && \
+    n stable && \
+    ln -sf /usr/local/n/versions/node/*/bin/node /usr/bin/node
 
 #     rm -rf /tmp/* && \
 
