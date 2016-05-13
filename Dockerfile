@@ -7,6 +7,7 @@ RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8  
 ENV LANGUAGE en_US:en  
 ENV LC_ALL en_US.UTF-8  
+RUN echo LC_ALL=en_US.UTF-8 >>  /etc/environment
 RUN echo "deb http://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list
 
 #force-yes needed because of missing certificate for sbt
