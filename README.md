@@ -1,4 +1,4 @@
-# docker-dev
+# docker-dev [![](https://images.microbadger.com/badges/image/reto/dev.svg)](https://microbadger.com/images/reto/dev "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/reto/dev.svg)](https://microbadger.com/images/reto/dev "Get your own version badge on microbadger.com")
 
 NetBeans v8.1.0 and other development tools in a Docker container accessible via [Xpra](http://xpra.org/).
 
