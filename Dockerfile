@@ -1,4 +1,4 @@
-FROM reto/x11-xpra:3
+FROM reto/x11-xpra:4
 MAINTAINER Reto Gmür "me@farewellutopia.com"
 # based on docker-netbeans by Fabio Rehm "fgrehm@gmail.com"
 
