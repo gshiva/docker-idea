@@ -37,7 +37,7 @@ RUN echo chromium-browser --no-sandbox > /usr/local/bin/chromium
 
 ADD state.xml /tmp/state.xml
 
-RUN wget http://download.netbeans.org/netbeans/8.1/final/bundles/netbeans-8.1-javaee-linux.sh -O /tmp/netbeans.sh -q && \
+RUN wget http://download.netbeans.org/netbeans/8.2/final/bundles/netbeans-8.2-javaee-linux.sh -O /tmp/netbeans.sh -q && \
     chmod +x /tmp/netbeans.sh && \
     echo 'Installing netbeans' && \
     /tmp/netbeans.sh --silent --state /tmp/state.xml && \
