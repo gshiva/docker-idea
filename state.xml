@@ -45,7 +45,7 @@
                 <property name="installation.timestamp">1505815792085</property>
                 <property name="start.menu.shortcut.location">all.users</property>
                 <property name="installation.location.macosx">$N{install}/NetBeans/NetBeans 8.2.app</property>
-                <property name="installation.location">/usr/local/netbeans-8.2</property>
+                <property name="installation.location">/usr/local/netbeans</property>
                 <property name="desktop.shortcut.location">all.users</property>
                 <property name="netbeans.summary.message.text">44 updates successfully installed.
 
