@@ -11,7 +11,7 @@ RUN echo LC_ALL=en_US.UTF-8 >>  /etc/environment
 RUN echo "deb http://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list
 
 #force-yes needed because of missing certificate for sbt
-RUN apt-get update && apt-get install -y --force-yes firefox tilda xfce4-terminal subversion git retext mercurial tcpflow unzip sbt ruby ruby-dev librxtx-java vim
+RUN apt-get update && apt-get install -y --force-yes firefox tilda xfce4-terminal subversion iputils-ping git retext mercurial tcpflow unzip sbt ruby ruby-dev librxtx-java vim
 
 
 
@@ -33,7 +33,8 @@ RUN npm cache clean -f && \
 
 RUN npm install -g browserify
 RUN gem install jekyll
-RUN echo chromium-browser --no-sandbox > /usr/local/bin/chromium
+RUN echo chromium-browser --no-sandbox > /usr/local/bin/chromium && \
+    chmod +rx /usr/local/bin/chromium
 
 ADD state.xml /tmp/state.xml
 
@@ -41,8 +42,8 @@ RUN wget http://download.netbeans.org/netbeans/8.2/final/bundles/netbeans-8.2-ja
     chmod +x /tmp/netbeans.sh && \
     echo 'Installing netbeans' && \
     /tmp/netbeans.sh --silent --state /tmp/state.xml && \
-    rm -rf /tmp/*
-
+    rm -rf /tmp/* && \
+    ln /usr/local/netbeans-8.2 /usr/local/netbeans
 
 ADD run /usr/local/bin/netbeans
 
