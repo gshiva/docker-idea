@@ -43,7 +43,7 @@ RUN wget http://download.netbeans.org/netbeans/8.2/final/bundles/netbeans-8.2-ja
     echo 'Installing netbeans' && \
     /tmp/netbeans.sh --silent --state /tmp/state.xml && \
     rm -rf /tmp/* && \
-    ln /usr/local/netbeans-8.2 /usr/local/netbeans
+    ln -s /usr/local/netbeans-8.2 /usr/local/netbeans
 
 ADD run /usr/local/bin/netbeans
 
